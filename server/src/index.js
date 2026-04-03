@@ -134,18 +134,20 @@ async function main() {
     return res.status(500).json({ error: 'Internal server error' });
   });
 
-  const host = process.env.HOST || '0.0.0.0';
-  const server = app.listen(env.PORT, host, () => {
-    log.info(
-      {
-        port: env.PORT,
-        host,
-        clientUrl: env.CLIENT_URL,
-        supabaseConfigured: env._supabaseConfigured,
-      },
-      'HireBlind API listening — GET / returns "Server running"',
-    );
-  });
+ const PORT = process.env.PORT || env.PORT || 3000;
+const host = process.env.HOST || '0.0.0.0';
+
+const server = app.listen(PORT, host, () => {
+  log.info(
+    {
+      port: PORT,
+      host,
+      clientUrl: env.CLIENT_URL,
+      supabaseConfigured: env._supabaseConfigured,
+    },
+    'HireBlind API listening — GET / returns "Server running"',
+  );
+});
 
   server.on('error', (err) => {
     log.error({ err }, 'HTTP server error');

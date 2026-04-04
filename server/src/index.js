@@ -38,23 +38,12 @@ async function main() {
   const app = express();
   app.use(helmet());
 
-  const corsAllowed = new Set([
-    env.CLIENT_URL,
-    'http://localhost:5173',
-    'http://127.0.0.1:5173',
-  ]);
-  const localViteRe = /^http:\/\/(localhost|127\.0\.0\.1):\d+$/;
   app.use(
-    cors({
-      origin(origin, callback) {
-        if (!origin) return callback(null, true);
-        if (corsAllowed.has(origin)) return callback(null, true);
-        if (localViteRe.test(origin)) return callback(null, true);
-        return callback(new Error(`CORS blocked for origin: ${origin}`));
-      },
-      credentials: true,
-    }),
-  );
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
   app.use(express.json({ limit: '2mb' }));
   app.use(pinoHttp({ logger: log }));
 

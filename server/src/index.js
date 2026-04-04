@@ -133,14 +133,13 @@ async function main() {
     req.log?.error({ err }, 'Unhandled error');
     return res.status(500).json({ error: 'Internal server error' });
   });
-
- const PORT = process.env.PORT || env.PORT || 3000;
-const host = process.env.HOST || '0.0.0.0';
+  
+const PORT = process.env.PORT || 3000;
+const host = '0.0.0.0';
 
 const server = app.listen(PORT, host, () => {
-  log.info(
-    {
-      port: PORT,
+  log.info({
+    port: PORT,
       host,
       clientUrl: env.CLIENT_URL,
       supabaseConfigured: env._supabaseConfigured,
